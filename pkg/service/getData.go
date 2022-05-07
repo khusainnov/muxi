@@ -13,6 +13,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
+
+
 type weatherLocal struct {
 	we weather.Weather
 }
