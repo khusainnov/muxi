@@ -1,23 +1,20 @@
 package main
 
 import (
-	"net/http"
-	"time"
+	"log"
 
+	muxi "test"
+	"test/pkg/handler"
 	"test/pkg/service"
 )
 
 func main() {
+	services := service.NewService()
+	handlers := handler.NewHandler(services)
 
-	service.NewService()
+	s := muxi.Server{}
 
-	s := &http.Server{
-		Addr:              ":7001",
-		//Handler:           ,
-		ReadTimeout:       15 * time.Second,
-		WriteTimeout:      15 * time.Second,
-		MaxHeaderBytes:    1 << 20,
+	if err := s.Run(handlers.InitRoutes()); err != nil {
+		log.Fatalln(err.Error())
 	}
-
-	s.ListenAndServe()
 }

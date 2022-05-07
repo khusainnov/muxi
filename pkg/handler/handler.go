@@ -13,12 +13,21 @@ type Handler struct {
 	service *service.Service
 }
 
-func (h *Handler) InitRoutes(router mux.Router) {
-	//router = mux.NewRouter()
+func NewHandler(service *service.Service) *Handler {
+	return &Handler{service: service}
+}
+
+func (h *Handler) InitRoutes() *mux.Router {
+	router := mux.NewRouter()
+
+	router = &mux.Router{}
+
 	router.HandleFunc("/weather/{city:[aA-zZ]+}", func(w http.ResponseWriter, r *http.Request) {
 		err := h.service.GetWeather(w, r)
 		if err != nil {
 			log.Fatalln()
 		}
 	})
+
+	return router
 }
