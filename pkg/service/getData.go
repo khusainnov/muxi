@@ -17,7 +17,7 @@ type weatherLocal struct {
 	we weather.Weather
 }
 
-func (s *Service) GetWeather(w http.ResponseWriter, r *http.Request) error {
+func (s *Service) GetWeather(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	city := vars["city"]
 
@@ -47,5 +47,5 @@ func (s *Service) GetWeather(w http.ResponseWriter, r *http.Request) error {
 	log.Printf("\nCountry: %v\nCity: %v\nAirport: %v\nLocal Time: %v\nTemperature: %v,C / %v,F\n",
 		weatherLocation.Country, weatherLocation.Region, weatherLocation.Name, weatherLocation.Localtime, weather1.we.Current.TempC, weather1.we.Current.TempF)
 
-	return nil
+	return
 }

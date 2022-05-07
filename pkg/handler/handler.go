@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 
 	"test/pkg/service"
@@ -17,17 +16,10 @@ func NewHandler(service *service.Service) *Handler {
 	return &Handler{service: service}
 }
 
-func (h *Handler) InitRoutes() *mux.Router {
+func (h *Handler) InitRoutes() http.Handler {
 	router := mux.NewRouter()
 
-	router = &mux.Router{}
-
-	router.HandleFunc("/weather/{city:[aA-zZ]+}", func(w http.ResponseWriter, r *http.Request) {
-		err := h.service.GetWeather(w, r)
-		if err != nil {
-			log.Fatalln()
-		}
-	})
+	router.HandleFunc("/weather/{city:[aA-zZ]+}", h.service.GetWeather).Methods("GET")
 
 	return router
 }
